@@ -1,1 +1,9 @@
+{
+  "name": "Custom Web OS",
+  "short_name": "WebOS",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e1e2f",
+  "theme_color": "#1e1e2f"
+}
 

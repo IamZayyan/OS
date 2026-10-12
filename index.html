@@ -106,10 +106,17 @@
         .ai-msg.user { background: #00f2fe; color: black; align-self: flex-end; border-bottom-right-radius: 2px; }
         .ai-msg.bot { background: #2a2a40; color: #e2e2e9; align-self: flex-start; border-bottom-left-radius: 2px; }
 
+        /* Google Integration App UI Layout */
+        .google-wrap { display: flex; flex-direction: column; height: 100%; background: #ffffff; border-radius: 8px; overflow: hidden; }
+        .google-header-bar { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px; background: #f2f2f2; border-bottom: 1px solid #ddd; }
+        .google-logo { font-size: 22px; font-weight: bold; background: linear-gradient(to right, #4285F4 0%, #EA4335 25%, #FBBC05 50%, #4285F4 75%, #34A853 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .google-input { flex: 1; padding: 8px 14px; border: 1px solid #ccc; border-radius: 20px; outline: none; color: #333; font-size: 14px; box-shadow: 0 1px 6px rgba(32,33,36,.28); }
+
         /* Settings Engine Layout */
         .settings-grid { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow-y: auto; }
         .settings-card { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
         .settings-card h4 { font-size: 14px; margin-bottom: 8px; color: #00f2fe; }
+        .t-btn { flex: 1; padding: 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; background: #252538; color: white; cursor: pointer; font-size: 12px; }
 
         /* Shell Start Menu */
         #start-menu {
@@ -124,11 +131,3 @@
         .menu-item:hover { background: rgba(255, 255, 255, 0.06); }
 
         /* Taskbar */
-        #taskbar { width: 100%; height: 45px; background: var(--taskbar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.04); display: flex; align-items: center; padding: 0 15px; color: #ffffff; position: fixed; bottom: 0; z-index: 999999; user-select: none; }
-        #start-btn { background: var(--primary-accent); border: none; color: #000000; padding: 6px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 15px; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
-        #taskbar-tabs { flex: 1; display: flex; gap: 8px; overflow-x: auto; align-items: center; }
-        .taskbar-tab { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); padding: 6px 14px; border-radius: 8px; color: #cccccc; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; max-width: 140px; }
-        .taskbar-tab.active { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); color: #ffffff; font-weight: 600; }
-        #clock { font-size: 13px; font-weight: 600; margin-left: auto; padding-left: 10px; color: #e2e2e9; }
-    </style>
-</head>

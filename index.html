@@ -7,17 +7,16 @@
     <style>
         :root {
             --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            --bg-main: #06040d;
-            --taskbar-bg: rgba(8, 8, 15, 0.85);
-            --window-bg: rgba(18, 18, 32, 0.75);
-            --header-bg: rgba(12, 12, 22, 0.9);
+            --bg-main: #05030a;
+            --taskbar-bg: rgba(6, 6, 12, 0.85);
+            --window-bg: rgba(16, 16, 28, 0.78);
+            --header-bg: rgba(10, 10, 18, 0.92);
             --primary-accent: linear-gradient(135deg, #00f2fe, #4facfe);
-            --border-glow: rgba(0, 242, 254, 0.15);
+            --border-glow: rgba(0, 242, 254, 0.18);
             --text-main: #f1f1f6;
-            --desktop-bg: radial-gradient(circle at 50% 50%, #111430 0%, #05030a 100%);
+            --desktop-bg: radial-gradient(circle at 50% 50%, #10122c 0%, #030207 100%);
         }
 
-        /* Alternate Theme Mappings */
         .theme-cyberpunk {
             --primary-accent: linear-gradient(135deg, #ff007f, #ffaa00);
             --border-glow: rgba(255, 0, 127, 0.25);
@@ -33,137 +32,103 @@
         body, html { width: 100%; height: 100%; overflow: hidden; background: var(--bg-main); color: var(--text-main); }
         
         #desktop {
-            width: 100%;
-            height: calc(100% - 45px);
-            background: var(--desktop-bg);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-content: flex-start;
-            flex-wrap: wrap;
+            width: 100%; height: calc(100% - 45px);
+            background: var(--desktop-bg); background-size: cover; background-position: center;
+            position: relative; padding: 25px; display: flex; flex-direction: column;
+            gap: 25px; align-content: flex-start; flex-wrap: wrap;
         }
 
         .shortcut {
-            width: 90px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 12px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            user-select: none;
+            width: 95px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #ffffff; cursor: pointer; padding: 10px; border-radius: 12px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); user-select: none;
         }
         .shortcut:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
         .shortcut .icon { font-size: 42px; margin-bottom: 8px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
         .shortcut .label { font-size: 12px; text-align: center; font-weight: 500; letter-spacing: 0.3px; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); }
 
         .window {
-            position: absolute;
-            background: var(--window-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            min-width: 280px;
-            min-height: 220px;
-            animation: openWin 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: absolute; background: var(--window-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-glow); border-radius: 16px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+            display: flex; flex-direction: column; overflow: hidden; min-width: 300px; min-height: 240px;
+            animation: openWin 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        @keyframes openWin {
-            from { transform: scale(0.92); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes openWin { from { transform: scale(0.93); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .window-header {
-            background: var(--header-bg);
-            padding: 14px 18px;
-            color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: move;
-            user-select: none;
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            background: var(--header-bg); padding: 14px 18px; color: #ffffff; display: flex;
+            justify-content: space-between; align-items: center; cursor: move; user-select: none;
+            font-size: 14px; font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-
         .window-controls { display: flex; gap: 8px; align-items: center; }
         .win-btn { border: none; border-radius: 50%; width: 13px; height: 13px; cursor: pointer; transition: transform 0.1s ease; }
         .win-btn:hover { transform: scale(1.2); }
-        .close-btn { background: #ff5f56; }
-        .min-btn { background: #ffbd2e; }
-        .max-btn { background: #27c93f; }
+        .close-btn { background: #ff5f56; } .min-btn { background: #ffbd2e; } .max-btn { background: #27c93f; }
         .window-content { flex: 1; background: transparent; padding: 15px; overflow: hidden; position: relative; }
         
         textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; background: transparent; color: #e2e2e9; font-family: monospace; font-size: 14px; line-height: 1.5; }
         iframe { width: 100%; height: 100%; border: none; background: #ffffff; border-radius: 8px; }
         
-        /* Calculator Grid */
+        /* Calculator */
         .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; height: 100%; }
         .calc-screen { grid-column: span 4; background: #0b0914; color: #00ffaa; border: 1px solid rgba(255,255,255,0.05); padding: 15px; font-size: 24px; text-align: right; border-radius: 8px; font-family: monospace; outline: none; }
         .calc-btn { background: #2a2a40; border: none; color: #ffffff; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.1s; }
-        .calc-btn:hover { background: #3d3d5c; }
-        .calc-btn.op { background: #1184ff; }
+        .calc-btn:hover { background: #3d3d5c; } .calc-btn.op { background: #1184ff; }
 
-        /* Snake Arcade Frame */
+        /* File Explorer */
+        .fe-toolbar { display: flex; gap: 10px; margin-bottom: 12px; }
+        .fe-list { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; height: calc(100% - 45px); }
+        .fe-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; font-size: 13px; cursor: pointer; }
+        .fe-item:hover { background: rgba(255,255,255,0.08); }
+        .fe-info { display: flex; align-items: center; gap: 10px; }
+
+        /* System Diagnostics */
+        .diag-grid { display: flex; flex-direction: column; gap: 12px; height: 100%; overflow-y: auto; }
+        .diag-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 6px; }
+
+        /* Arcade & Paint Layouts */
         .snake-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 10px; }
-        .snake-canvas { background: #000000; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        .snake-canvas { background: #000000; border-radius: 8px; }
         .snake-score { font-family: monospace; font-size: 16px; font-weight: bold; color: #00ffaa; }
-
-        /* Paint Studio Layout */
         .paint-container { display: flex; flex-direction: column; height: 100%; gap: 10px; }
-        .paint-toolbar { display: flex; gap: 12px; align-items: center; font-size: 13px; font-weight: 500; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px; }
-        .paint-canvas { background: #ffffff; border-radius: 8px; cursor: crosshair; flex: 1; width: 100%; }
+        .paint-toolbar { display: flex; gap: 12px; align-items: center; font-size: 13px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px; }
+        .paint-canvas { background: #ffffff; border-radius: 8px; cursor: crosshair; flex: 1; }
         .paint-btn { background: #3d3d5c; border: none; color: #ffffff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        /* Browser Sandbox Layout */
+        /* Browser & AI Chat */
         .browser-container { display: flex; flex-direction: column; height: 100%; gap: 10px; }
         .browser-bar { display: flex; gap: 8px; }
         .browser-input { flex: 1; background: #111122; border: 1px solid rgba(255,255,255,0.1); color: #ffffff; padding: 8px 14px; border-radius: 8px; outline: none; font-size: 13px; }
         .browser-btn { background: #00f2fe; border: none; color: #000; padding: 0 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
-
-        /* AI Neural Assistant */
         .ai-container { display: flex; flex-direction: column; height: 100%; gap: 10px; }
         .ai-chatbox { flex: 1; background: rgba(0, 0, 0, 0.25); border-radius: 10px; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        .ai-msg { padding: 10px 14px; border-radius: 12px; max-width: 80%; font-size: 13px; line-height: 1.45; }
+        .ai-msg { padding: 10px 14px; border-radius: 12px; max-width: 80%; font-size: 13px; }
         .ai-msg.user { background: #00f2fe; color: black; align-self: flex-end; border-bottom-right-radius: 2px; }
         .ai-msg.bot { background: #2a2a40; color: #e2e2e9; align-self: flex-start; border-bottom-left-radius: 2px; }
-        .ai-input-zone { display: flex; gap: 8px; }
 
-        /* Settings Engine Layout Panel */
-        .settings-grid { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow-y: auto; padding-right: 5px; }
+        /* Settings Engine Layout */
+        .settings-grid { display: flex; flex-direction: column; gap: 15px; height: 100%; overflow-y: auto; }
         .settings-card { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
         .settings-card h4 { font-size: 14px; margin-bottom: 8px; color: #00f2fe; }
-        .theme-select-row { display: flex; gap: 8px; margin-top: 5px; }
-        .t-btn { flex: 1; padding: 8px; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; background: #252538; color: white; cursor: pointer; font-size: 12px; }
 
-        /* Application Launcher Start Menu */
+        /* Shell Start Menu */
         #start-menu {
             position: absolute; bottom: 55px; left: 15px; width: 260px;
-            background: rgba(12, 12, 22, 0.95); backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border-glow);
-            border-radius: 14px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            background: rgba(10, 10, 18, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border-glow); border-radius: 14px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
             display: none; flex-direction: column; padding: 12px; z-index: 99999;
             animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes slideUp { from { transform: translateY(15px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .menu-item { display: flex; align-items: center; gap: 14px; color: #ffffff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.15s; }
+        .menu-item { display: flex; align-items: center; gap: 14px; color: #ffffff; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }
         .menu-item:hover { background: rgba(255, 255, 255, 0.06); }
 
-        /* System Navigation Taskbar */
+        /* Taskbar */
         #taskbar { width: 100%; height: 45px; background: var(--taskbar-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.04); display: flex; align-items: center; padding: 0 15px; color: #ffffff; position: fixed; bottom: 0; z-index: 999999; user-select: none; }
-        #start-btn { background: var(--primary-accent); border: none; color: #000000; padding: 6px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 15px; box-shadow: 0 4px 12px rgba(0,242,254,0.3); transition: transform 0.1s; }
-        #start-btn:active { transform: scale(0.95); }
+        #start-btn { background: var(--primary-accent); border: none; color: #000000; padding: 6px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 15px; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         #taskbar-tabs { flex: 1; display: flex; gap: 8px; overflow-x: auto; align-items: center; }
+        .taskbar-tab { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); padding: 6px 14px; border-radius: 8px; color: #cccccc; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; max-width: 140px; }
+        .taskbar-tab.active { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); color: #ffffff; font-weight: 600; }
+        #clock { font-size: 13px; font-weight: 600; margin-left: auto; padding-left: 10px; color: #e2e2e9; }
+    </style>
+</head>

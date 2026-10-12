@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web OS Dashboard</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #0b0914; }
+        /* Base Reset & Core Shell Variables */
+        :root {
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --bg-main: #0b0914;
+            --taskbar-bg: rgba(10, 10, 15, 0.95);
+            --window-bg: rgba(30, 30, 45, 0.9);
+            --header-bg: rgba(20, 20, 30, 0.95);
+            --primary-accent: linear-gradient(135deg, #6a11cb, #2575fc);
+            --border-glow: rgba(255, 255, 255, 0.12);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: var(--font-family); 
+        }
+
+        body, html { 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; 
+            background: var(--bg-main); 
+        }
         
-        /* Desktop Area */
+        /* Desktop Area Workspace Context */
         #desktop {
             width: 100%;
             height: calc(100% - 45px);
@@ -24,38 +46,50 @@
             flex-wrap: wrap;
         }
 
-        /* Shortcuts */
+        /* Shortcuts and Icon Assemblies */
         .shortcut {
             width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #ffffff;
             cursor: pointer;
             padding: 8px;
             border-radius: 8px;
-            transition: background 0.2s;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            transition: background 0.2s ease;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
             user-select: none;
         }
-        .shortcut:hover { background: rgba(255,255,255,0.1); }
-        .shortcut .icon { font-size: 40px; margin-bottom: 5px; }
-        .shortcut .label { font-size: 12px; text-align: center; }
+        
+        .shortcut:hover { 
+            background: rgba(255, 255, 255, 0.1); 
+        }
+        
+        .shortcut .icon { 
+            font-size: 40px; 
+            margin-bottom: 5px; 
+        }
+        
+        .shortcut .label { 
+            font-size: 12px; 
+            text-align: center; 
+        }
 
-        /* Floating Windows Manager */
+        /* Floating Windows Architectural Framework */
         .window {
             position: absolute;
-            background: rgba(30, 30, 45, 0.9);
+            background: var(--window-bg);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.12);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glow);
             border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             z-index: 10;
-            animation: openWin 0.15s ease-out;
+            animation: openWin 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes openWin {
@@ -64,9 +98,9 @@
         }
 
         .window-header {
-            background: rgba(20, 20, 30, 0.95);
+            background: var(--header-bg);
             padding: 12px;
-            color: white;
+            color: #ffffff;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -74,105 +108,261 @@
             user-select: none;
             font-size: 14px;
             font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .window-controls { display: flex; gap: 8px; align-items: center; }
-        .win-btn { border: none; border-radius: 50%; width: 12px; height: 12px; cursor: pointer; transition: transform 0.1s; }
-        .win-btn:hover { transform: scale(1.2); }
+        .window-controls { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+        }
+        
+        .win-btn { 
+            border: none; 
+            border-radius: 50%; 
+            width: 12px; 
+            height: 12px; 
+            cursor: pointer; 
+            transition: transform 0.1s ease; 
+        }
+        
+        .win-btn:hover { 
+            transform: scale(1.2); 
+        }
+        
         .close-btn { background: #ff5f56; }
         .min-btn { background: #ffbd2e; }
         .max-btn { background: #27c93f; }
-        .window-content { flex: 1; background: transparent; padding: 12px; overflow: hidden; position: relative; }
         
-        /* Core System Apps UI */
-        textarea { width: 100%; height: 100%; border: none; resize: none; outline: none; background: transparent; color: #e0e0e0; font-family: monospace; font-size: 14px; }
-        iframe { width: 100%; height: 100%; border: none; background: white; border-radius: 6px; }
-        
-        /* Calculator Grid */
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; height: 100%; }
-        .calc-screen { grid-column: span 4; background: #111; color: #00ff00; border: none; padding: 12px; font-size: 20px; text-align: right; border-radius: 6px; font-family: monospace; outline: none; }
-        .calc-btn { background: #3a3a52; border: none; color: white; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .calc-btn:hover { background: #4e4e6e; }
-        .calc-btn.op { background: #6a11cb; }
-
-        /* Snake App Canvas */
-        .snake-canvas { background: #111; display: block; margin: 0 auto; border-radius: 6px; }
-        .snake-score { color: white; font-family: monospace; font-size: 14px; text-align: center; margin-bottom: 5px; }
-
-        /* Settings */
-        .settings-layout { display: flex; flex-direction: column; gap: 15px; color: white; }
-        .settings-section { display: flex; flex-direction: column; gap: 8px; }
-        .settings-input { background: #1a1a26; border: 1px solid #444; color: white; padding: 8px; border-radius: 6px; outline: none; font-size: 13px; }
-        .settings-theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .theme-btn { padding: 12px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; cursor: pointer; text-align: center; font-weight: 500; font-size: 12px; }
-
-        /* Paint Canvas */
-        .paint-toolbar { display: flex; gap: 10px; margin-bottom: 8px; align-items: center; color: white; font-size: 13px; }
-        .paint-canvas { background: white; border-radius: 6px; cursor: crosshair; display: block; }
-        .paint-btn { background: #4e4e6e; border: none; color: white; padding: 4px 10px; border-radius: 4px; cursor: pointer; }
-
-        /* Browser Window Bar */
-        .browser-bar { display: flex; gap: 8px; margin-bottom: 8px; }
-        .browser-input { flex: 1; background: #1a1a26; border: 1px solid #444; color: white; padding: 6px 12px; border-radius: 6px; outline: none; font-size: 13px; }
-        .browser-btn { background: #6a11cb; border: none; color: white; padding: 0 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
-
-        /* AI Chat Window App */
-        .ai-container { display: flex; flex-direction: column; height: 100%; gap: 10px; }
-        .ai-chatbox { flex: 1; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .ai-msg { padding: 8px 12px; border-radius: 8px; max-width: 80%; font-size: 13px; line-height: 1.4; color: white; }
-        .ai-msg.user { background: #2575fc; align-self: flex-end; }
-        .ai-msg.bot { background: #3a3a52; align-self: flex-start; font-family: monospace; }
-        .ai-input-zone { display: flex; gap: 8px; }
-
-        /* Start Menu Launcher */
-        #start-menu {
-            position: absolute; bottom: 50px; left: 15px; width: 240px;
-            background: rgba(15, 15, 25, 0.95); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; flex-direction: column;
-            padding: 10px; z-index: 1000; animation: slideUp 0.15s ease-out;
+        .window-content { 
+            flex: 1; 
+            background: transparent; 
+            padding: 12px; 
+            overflow: hidden; 
+            position: relative; 
         }
-        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .menu-item { display: flex; align-items: center; gap: 12px; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        .menu-item:hover { background: rgba(255,255,255,0.08); }
+        
+        /* Core Functional Elements Viewports */
+        textarea { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            resize: none; 
+            outline: none; 
+            background: transparent; 
+            color: #e0e0e0; 
+            font-family: monospace; 
+            font-size: 14px; 
+        }
+        
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            background: #ffffff; 
+            border-radius: 6px; 
+        }
+        
+        /* Calculator Grid Matrix Layout */
+        .calc-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+            height: 100%; 
+        }
+        
+        .calc-screen { 
+            grid-column: span 4; 
+            background: #111111; 
+            color: #00ff00; 
+            border: none; 
+            padding: 12px; 
+            font-size: 20px; 
+            text-align: right; 
+            border-radius: 6px; 
+            font-family: monospace; 
+            outline: none; 
+        }
+        
+        .calc-btn { 
+            background: #3a3a52; 
+            border: none; 
+            color: #ffffff; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+        
+        .calc-btn:hover { 
+            background: #4e4e6e; 
+        }
+        
+        .calc-btn.op { 
+            background: #6a11cb; 
+        }
 
-        /* Taskbar */
-        #taskbar { width: 100%; height: 45px; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(5px); border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; padding: 0 15px; color: white; position: fixed; bottom: 0; z-index: 1000; user-select: none; }
-        #start-btn { background: linear-gradient(135deg, #6a11cb, #2575fc); border: none; color: white; padding: 6px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-right: 15px; }
-        #taskbar-tabs { flex: 1; display: flex; gap: 8px; overflow-x: auto; }
-        .taskbar-tab { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 6px; color: white; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .taskbar-tab.active { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); font-weight: 600; }
-        #clock { font-size: 14px; font-weight: 500; margin-left: 15px; }
-    </style>
-</head>
-<body>
+        /* Arcade Module Framework (Snake) */
+        .snake-canvas { 
+            background: #111111; 
+            display: block; 
+            margin: 0 auto; 
+            border-radius: 6px; 
+        }
+        
+        .snake-score { 
+            color: #ffffff; 
+            font-family: monospace; 
+            font-size: 14px; 
+            text-align: center; 
+            margin-bottom: 5px; 
+        }
 
-    <div id="desktop" onclick="closeStartMenu(event)">
-        <!-- Desktop Shortcuts -->
-        <div class="shortcut" onclick="openApp('Browser', 700, 500)">
-            <div class="icon">🌐</div>
-            <div class="label">Browser</div>
-        </div>
-        <div class="shortcut" onclick="openApp('GeForce NOW', 800, 550)">
-            <div class="icon">🎮</div>
-            <div class="label">GeForce NOW</div>
-        </div>
-        <div class="shortcut" onclick="openApp('Infinity AI', 400, 420)">
-            <div class="icon">🤖</div>
-            <div class="label">Infinity AI</div>
-        </div>
-        <div class="shortcut" onclick="openApp('Snake Game', 340, 390)">
-            <div class="icon">🐍</div>
-            <div class="label">Snake Game</div>
-        </div>
-        <div id="window-container"></div>
-    </div>
+        /* Settings System Management Layout */
+        .settings-layout { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            color: #ffffff; 
+        }
+        
+        .settings-section { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
+        
+        .settings-input { 
+            background: #1a1a26; 
+            border: 1px solid #444444; 
+            color: #ffffff; 
+            padding: 8px; 
+            border-radius: 6px; 
+            outline: none; 
+            font-size: 13px; 
+        }
+        
+        .settings-theme-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+        }
+        
+        .theme-btn { 
+            padding: 12px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; 
+            color: #ffffff; 
+            cursor: pointer; 
+            text-align: center; 
+            font-weight: 500; 
+            font-size: 12px; 
+        }
 
-    <!-- Sliding Start Menu -->
-    <div id="start-menu">
-        <div class="menu-item" onclick="openApp('Browser', 700, 500); toggleStartMenu()"><span style="font-size:18px">🌐</span> Browser</div>
-        <div class="menu-item" onclick="openApp('GeForce NOW', 800, 550); toggleStartMenu()"><span style="font-size:18px">🎮</span> GeForce NOW</div>
-        <div class="menu-item" onclick="openApp('Infinity AI', 400, 420); toggleStartMenu()"><span style="font-size:18px">🤖</span> Infinity AI</div>
-        <div class="menu-item" onclick="openApp('Notepad', 450, 320); toggleStartMenu()"><span style="font-size:18px">📝</span> Notepad</div>
-        <div class="menu-item" onclick="openApp('Calculator', 260, 360); toggleStartMenu()"><span style="font-size:18px">🧮</span> Calculator</div>
+        /* Creative Utilities Interface (Paint) */
+        .paint-toolbar { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 8px; 
+            align-items: center; 
+            color: #ffffff; 
+            font-size: 13px; 
+        }
+        
+        .paint-canvas { 
+            background: #ffffff; 
+            border-radius: 6px; 
+            cursor: crosshair; 
+            display: block; 
+        }
+        
+        .paint-btn { 
+            background: #4e4e6e; 
+            border: none; 
+            color: #ffffff; 
+            padding: 4px 10px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+
+        /* Sandbox Web Browser Controls */
+        .browser-bar { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 8px; 
+        }
+        
+        .browser-input { 
+            flex: 1; 
+            background: #1a1a26; 
+            border: 1px solid #444444; 
+            color: #ffffff; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            outline: none; 
+            font-size: 13px; 
+        }
+        
+        .browser-btn { 
+            background: #6a11cb; 
+            border: none; 
+            color: #ffffff; 
+            padding: 0 14px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 13px; 
+        }
+
+        /* Synthetic Chatbot UI Interface */
+        .ai-container { 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+            gap: 10px; 
+        }
+        
+        .ai-chatbox { 
+            flex: 1; 
+            background: rgba(0, 0, 0, 0.3); 
+            border-radius: 8px; 
+            padding: 10px; 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        
+        .ai-msg { 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            max-width: 80%; 
+            font-size: 13px; 
+            line-height: 1.4; 
+            color: #ffffff; 
+        }
+        
+        .ai-msg.user { 
+            background: #2575fc; 
+            align-self: flex-end; 
+        }
+        
+        .ai-msg.bot { 
+            background: #3a3a52; 
+            align-self: flex-start; 
+            font-family: monospace; 
+        }
+        
+        .ai-input-zone { 
+            display: flex; 
+            gap: 8px; 
+        }
+
+        /* Application Launcher Start Menu */
+        #start-menu {
+            position: absolute; 
+            bottom: 50px; 
+            left: 15px; 
+            width: 240px;
+            background: rgba(15, 15, 25, 0.95); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
